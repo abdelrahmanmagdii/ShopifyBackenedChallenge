@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Shopify Backend Challenge
+  </title>
+  <script type="text/javascript"  >
+    function displayWarehouseID(){
+      //alert("product");
+      let inputId = document.querySelector('#inputId');
+      let id = document.querySelector('#id');
+      let name = document.querySelector('#name');
+      let country = document.querySelector('#country');
+      let state = document.querySelector('#state');
+      let zipcode = document.querySelector('#zipcode');
+
+      // Creating a XHR object
+      let xhr = new XMLHttpRequest();
+      let url = "warehouse/get/"+inputId.value;
+
+      // open a connection
+      xhr.open("GET", url, true);
+
+      // Set the request header i.e. which type of content you are sending
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Accept", "application/json");
+
+      // Create a state change callback
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const obj = JSON.parse(this.responseText);
+          // Print received data from server
+          id.value = obj.id;
+          name.value = obj.name;
+          country.value = obj.country;
+          state.value = obj.state;
+          zipcode.value = obj.zipcode;
+        }
+      };
+      // Sending data with the request
+      xhr.send();
+    }
+  </script>
+</head>
+
+<body style="text-align:center;" id="body">
+<h1 style="color:green;">
+  Shopify Backend Challenge
+</h1>
+<form action="">
+  <br/><input type="text" name="id" id="inputId" placeholder ="id" />
+  <br/><input type="submit" value="Print all warehouses" onclick="displayWarehouseID(); return false;">
+</form>
+<div id="result">
+  <br/><input type="text" name="" id="id" placeholder ="id" readonly />
+  <br/><input type="text" name="" id="name" placeholder ="name"  readonly/>
+  <br/><input type="text" name="" id="country" placeholder ="country"  readonly/>
+  <br/><input type="text" name="" id="state" placeholder ="state"  readonly/>
+  <br/><input type="text" name="" id="zipcode" placeholder ="zipcode"  readonly/>
+
+</div>
+</body>
+</html>

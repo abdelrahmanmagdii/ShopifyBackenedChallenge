@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>
+    Shopify Backend Challenge
+  </title>
+  <script type="text/javascript"  >
+    function displayProducts(){
+      //alert("product");
+      let result = document.querySelector('#result');
+
+      // Creating a XHR object
+      let xhr = new XMLHttpRequest();
+      let url = "product/list";
+
+      // open a connection
+      xhr.open("GET", url, true);
+
+      // Set the request header i.e. which type of content you are sending
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.setRequestHeader("Accept", "application/json");
+
+      // Create a state change callback
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Print received data from server
+
+          const data = JSON.parse(this.responseText);
+          let resultStr ="";
+          data.forEach(obj => {
+            Object.entries(obj).forEach(([key, value]) => {
+              console.log(`${key} ${value}`);
+              resultStr += `<br/>${key} ${value}`;
+            });
+            console.log('-------------------');
+            resultStr += '<br/>-------------------';
+          });
+          result.innerHTML = resultStr;
+        }
+      };
+
+      // Sending data with the request
+      xhr.send();
+    }
+  </script>
+</head>
+
+<body style="text-align:center;" id="body">
+<h1 style="color:green;">
+  Shopify Backend Challenge
+</h1>
+<form action="">
+  <br/><input type="submit" value="Print all products" onclick="displayProducts(); return false;">
+</form>
+<div id="result">
+
+</div>
+</body>
+</html>

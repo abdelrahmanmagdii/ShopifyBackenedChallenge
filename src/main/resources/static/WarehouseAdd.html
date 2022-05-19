@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        Shopify Backend Challenge
+    </title>
+    <script type="text/javascript"  >
+        function postWarehouse(){
+            // alert("start");
+            let result = document.querySelector('#result');
+            let id = document.querySelector('#id');
+            let name = document.querySelector('#name');
+            let country = document.querySelector('#country');
+            let state = document.querySelector('#state');
+            let zipcode = document.querySelector('#zipcode');
+
+            // Creating a XHR object
+            let xhr = new XMLHttpRequest();
+            let url = "warehouse/create";
+
+            // open a connection
+            xhr.open("POST", url, true);
+
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader("Accept", "application/json");
+
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+
+                    // Print received data from server
+                    result.innerHTML = this.responseText;
+
+                }
+            };
+
+            // Converting JSON data to string
+            var data = JSON.stringify(
+                { "id": id.value,
+                    "name": name.value,
+                    "country": country.value,
+                    "state": state.value,
+                    "zipcode": zipcode.value,});
+
+            // Sending data with the request
+            xhr.send(data);
+        }
+    </script>
+</head>
+
+<body style="text-align:center;" id="body">
+<h1 style="color:green;">
+    Add a new Warehouse
+</h1>
+<form action="">
+    <br/><input type="text" name="id" id="id" placeholder ="Warehouse id" />
+    <br/><input type="text" name="name" id="name" placeholder ="Warehouse Name" />
+    <br/><input type="text" name="country" id="country" placeholder ="Warehouse Country" />
+    <br/><input type="text" name="state" id="state" placeholder ="Warehouse state" />
+    <br/><input type="text" name="zipcode" id="zipcode" placeholder ="Warehouse zipcode" />
+    <br/><input type="submit" value="Add warehouse" onclick="postWarehouse(); return false;">
+</form>
+<div id="result">
+
+</div>
+
+</body>
+
+</html>
